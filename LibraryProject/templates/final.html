@@ -13,7 +13,7 @@
 <!--    }-->
 <!--</script>-->
 
-<h1>BOOK Title: {{book.title}}</h1>
+<h1>BOOK </h1>
 <!--
 1.check for any other user has any other books borrowed in the database
 2.list those books and the deadlines as well as any penalties if any
@@ -23,9 +23,8 @@
 <h1>Borrowed by:</h1>
 <h1>Any other books Borrowed:</h1>
 <h1>Deadlines:</h1>
-
 <input type="checkbox" onchange="document.getElementById('hello').disabled = !this.checked;">Agree to <a href="">Terms and Conditions</a></input><br><br>
-<button id="hello" disabled onclick="{% url 'index' %}">Accept</button>
+<button id="hello" disabled onclick="{% url 'index' %}">ACCEPT</button>
 
 
 </body>

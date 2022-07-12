@@ -171,7 +171,10 @@ def borrowed(request, id):
         transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
                                                    borrow_date=borrow_date,
                                                    book_id=book_id)
+
+
         transaction.save()
+
         return render(request, "final.html")
     else:
         return redirect("/login/")
