@@ -5,7 +5,7 @@ One time Passwords for verification of students as they come to
 pick up the books from the library. (Issued by the Librarian) -PLAUSIBLY DO
 
 
-Make the book unavailable when borrowed - MUST DO
+Make the book unavailable when borrowed - MUST DO -------------DONE
 
 Move the terms and conditions to borrow.html. - MUST DO
 

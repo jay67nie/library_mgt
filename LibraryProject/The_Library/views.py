@@ -114,7 +114,7 @@ def search(request):  # function called on first access to search.html
 
 def index(request):
     if request.user.is_authenticated:
-        my_books = book.objects.all()   #.get(returned=True)
+        my_books = book.objects.filter(borrowed=False)   #.get(returned=True)
         print(request.user.id)
 
         context = {
@@ -167,13 +167,18 @@ def borrowed(request, id):
         student = request.user.get_full_name()  # student = request.user
         borrow_date = datetime.date.today()
         book_name = book_id.title
+        borrowed = not returned
+        book_id.borrowed = borrowed
+        book_id.save()
+        book_id = book.objects.get(id=id)
+
 
         transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
                                                    borrow_date=borrow_date,
                                                    book_id=book_id)
-
-
         transaction.save()
+
+        book_id.borrowed = borrowed
 
         return render(request, "final.html")
     else:
