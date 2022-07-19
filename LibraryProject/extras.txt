@@ -23,5 +23,7 @@ Password Strength validator in Django ----DO (ref: https://stackoverflow.com/que
 
 Change Website Font -----PLAUSIBLY DO
 
+Every time you refresh a page after borrowing, the same book is added to the borrowed database even if its already borrowed-MUST DO---DONE
 
+students should have a maximum number of books to borrow--MUST DO
 
