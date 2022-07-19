@@ -1,1 +1,1 @@
-web: gunicorn LibraryProject.LibraryProject.wsgi
+web: gunicorn --chdir LibraryProject LibraryProject.wsgi
