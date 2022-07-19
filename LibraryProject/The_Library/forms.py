@@ -7,7 +7,17 @@ class SignUp_form(forms.Form):
     user_name = forms.CharField(max_length=50)
     email = forms.EmailField()
     password = forms.CharField(max_length=50, widget=forms.PasswordInput)
+    re_enter_password=forms.CharField(max_length=50, widget=forms.PasswordInput)
 
+    def clean_password(self):
+        password=self.cleaned_data.get("password")
+        re_enter_password=self.cleaned_data.get("re_enter_password")
+
+        # .objects.filter(password=password,re_enter_password=re_enter_password)
+
+        if password != re_enter_password:
+            raise forms.ValidationError("Two passwords entered aren't the same")
+        return password,re_enter_password
 
 class Login_form(forms.Form):
     user_name = forms.CharField(max_length=50)

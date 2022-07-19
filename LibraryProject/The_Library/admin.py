@@ -12,9 +12,13 @@ class bookAdmin(admin.ModelAdmin):
 def book_idx(obj):
     return obj.book_id.id
 
+@admin.display(description="Student ID")
+def studentx(obj):
+    return obj.student.id
+
 
 class borrowed_bookAdmin(admin.ModelAdmin):
-    list_display = ("student", book_idx, "borrow_date", "return_date", "returned", "penalty_due")
+    list_display = (studentx, book_idx, "borrow_date", "due_date", "return_date", "returned", "penalty_due")
 
 
 admin.site.register(borrowed_book, borrowed_bookAdmin)

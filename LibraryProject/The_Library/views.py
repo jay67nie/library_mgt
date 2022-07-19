@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
+
 from .forms import Book_search
 from .forms import SignUp_form, Login_form
 from .models import book, borrowed_book
@@ -47,6 +48,7 @@ def sign_up(request):
             user_name = form.cleaned_data['user_name']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+            re_enter_password = form.cleaned_data['re_enter_password']
             print(form.cleaned_data)
 
             # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
@@ -55,6 +57,10 @@ def sign_up(request):
             user.save()
 
             return redirect(log_in)
+        else:
+
+            return redirect(sign_up)
+        # #     messages.error(request,"Passwords are not matching.")
 
 
     else:
@@ -114,7 +120,7 @@ def search(request):  # function called on first access to search.html
 
 def index(request):
     if request.user.is_authenticated:
-        my_books = book.objects.filter(borrowed=False)   #.get(returned=True)
+        my_books = book.objects.filter(borrowed=False)  # .get(returned=True)
         print(request.user.id)
 
         context = {
@@ -163,31 +169,47 @@ def search_result(request):  # Display search results using index.html # Called 
 def borrowed(request, id):
     if request.user.is_authenticated:
         book_id = book.objects.get(id=id)
-        returned = False
-        student = request.user.get_full_name()  # student = request.user
-        borrow_date = datetime.date.today()
-        book_name = book_id.title
-        borrowed = not returned
-        book_id.borrowed = borrowed
-        book_id.save()
-        book_id = book.objects.get(id=id)
+        if not book_id.borrowed:
+            returned = False
+            student = request.user
+            print(student.id)
+            borrow_date = datetime.date.today()
+            due_date = borrow_date + datetime.timedelta(weeks=2)
+            book_name = book_id.title
+            borrowed = not returned
+            book_id.borrowed = borrowed
+            book_id.save()
+            book_id = book.objects.get(id=id)
+            my_ctxt = to_return(book_id, request.user)
 
+            transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
+                                                       borrow_date=borrow_date, due_date=due_date,
+                                                       book_id=book_id)
+            transaction.save()
 
-        transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
-                                                   borrow_date=borrow_date,
-                                                   book_id=book_id)
-        transaction.save()
+            book_id.borrowed = borrowed
 
-        book_id.borrowed = borrowed
-
-        return render(request, "final.html")
+            return render(request, "final.html", my_ctxt)
+        else:
+            book_id = book.objects.get(id=id)
+            my_ctxt = to_return(book_id, request.user)
+            return render(request, "final.html", my_ctxt)
     else:
         return redirect("/login/")
 
 
+def to_return(book, user):
+    books = borrowed_book.objects.filter(student=user)
+    my_ctxt = {
+        "books": books,
+        "borrowed_book": book
+    }
+    return my_ctxt
+
+
 def report(request):
     if request.user.is_authenticated:
-        obj = borrowed_book.objects.all() #get non-returned books instead
+        obj = borrowed_book.objects.all()  # get non-returned books instead
         for x in obj:
             return_date = x.borrow_date + datetime.timedelta(weeks=2)
             time_elapse = datetime.date.today() - return_date
@@ -221,3 +243,8 @@ def borrow(request, id):
         return render(request, "borrow.html", my_ctxt)
     else:
         return redirect("/login/")
+
+
+def terms (request):
+    if request.user.is_authenticated:
+        return render(request,"terms.html")
