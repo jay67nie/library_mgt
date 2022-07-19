@@ -1,8 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "Base.html" %}
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    {% block title %}
+     <title>Status</title>
+    {% endblock %}
+
 </head>
 <body>
 <!--<h1> Your request has been submitted! Pick up the book at the Library.</h1>-->
@@ -12,21 +14,38 @@
 <!--    $.get("{% url 'index' %}"), 5000)-->
 <!--    }-->
 <!--</script>-->
-
-<h1>BOOK Title: {{book.title}}</h1>
+{% block content %}
+<h1>You have just borrowed <b>{{borrowed_book.title}}</b> by <b>{{borrowed_book.author}}</b></h1>
 <!--
 1.check for any other user has any other books borrowed in the database
 2.list those books and the deadlines as well as any penalties if any
 3.Student shouldnt be able to have more than 3 books borrowed/in their name
 
 -->
-<h1>Borrowed by:</h1>
-<h1>Any other books Borrowed:</h1>
-<h1>Deadlines:</h1>
+<!--<h1>Borrowed by:</h1>-->
+{% if not books %}
+    <h5>You do not have any previous pending books for return.</h5>
+{% else %}
+    <h5>The following books are pending return</h5>
+{% endif %}
+{% endblock %}
 
-<input type="checkbox" onchange="document.getElementById('hello').disabled = !this.checked;">Agree to <a href="">Terms and Conditions</a></input><br><br>
-<button id="hello" disabled onclick="{% url 'index' %}">Accept</button>
+{% block content2 %}
+<div class="row justify-content-center">
+    <ul class="list-group text-center">
+        {% for book in books %}
+        <li class="list-group-item">{{book.book_id.title}} due {{book.due_date}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+
+
+
+
+<!--<input type="checkbox" onchange="document.getElementById('hello').disabled = !this.checked;">Agree to <a href="">Terms and Conditions</a></input><br><br>-->
+<!--<button id="hello" disabled onclick="{% url 'index' %}">Accept</button>-->
 
 
 </body>
-</html>

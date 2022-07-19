@@ -7,7 +7,7 @@ pick up the books from the library. (Issued by the Librarian) -PLAUSIBLY DO
 
 Make the book unavailable when borrowed - MUST DO -------------DONE
 
-Move the terms and conditions to borrow.html. - MUST DO
+Move the terms and conditions to borrow.html. - MUST DO----------DONE
 
 Modify the final.html -  MUST DO
 
@@ -17,7 +17,7 @@ Include Expected Return Date in the borrowed_book table -PLAUSIBLY DO
 
 Include Alert Dialogs for messages at signup/login and errors in database. ------DO (ref: https://www.youtube.com/watch?v=R8oyrL99nrE)
 
-Include Re-enter password in Sign Up page. ----DO
+Include Re-enter password in Sign Up page. ----DO-----DONE
 
 Password Strength validator in Django ----DO (ref: https://stackoverflow.com/questions/5226329/enforcing-password-strength-requirements-with-django-contrib-auth-views-password)
 
