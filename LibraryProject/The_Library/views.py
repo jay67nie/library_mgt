@@ -178,7 +178,7 @@ def borrowed(request, id):
         borrowed = not returned
         book_id.borrowed = borrowed
         book_id.save()
-         book_id = book.objects.get(id=id)
+        book_id = book.objects.get(id=id)
         my_ctxt = to_return(book_id, request.user)
 
         transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
