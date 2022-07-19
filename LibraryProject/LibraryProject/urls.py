@@ -15,8 +15,11 @@ Including another URLconf
 """
 from The_Library.views import index, search, search_result, borrow, report, borrowed
 from The_Library.views import log_in, sign_up, login_verify, log_out
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+
+from LibraryProject.LibraryProject import settings
 
 urlpatterns = [
     path('admin/report', report, name='report'),
@@ -33,4 +36,4 @@ urlpatterns = [
     path('borrow/<int:id>', borrow),
 
 ]
-# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_FILES)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
