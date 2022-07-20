@@ -1,6 +1,9 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
+import datetime
+
+from django.utils import timezone
 
 
 class book(models.Model):
