@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os.path
 from pathlib import Path
-import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,9 +25,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-kvwk^bl9&h44pjx@x6b%cx$na6q67lkmmhxrk919%ck+1=c79c'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','library--mgt.herokuapp.com' , '127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','library--mgt.herokuapp.com']
 
 
 # Application definition
@@ -130,6 +129,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-django_heroku.settings(locals())

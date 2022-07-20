@@ -1,1 +1,1 @@
-web: gunicorn LibraryProject.wsgi --log-file -
+web: gunicorn LibraryProject.wsgi
