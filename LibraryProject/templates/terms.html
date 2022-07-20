@@ -1,10 +1,26 @@
+{% extends "Base.html" %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    {%block title %}
+    <title>Terms and conditions</title>
+    {%endblock%}
 </head>
 <body>
+{%block content2%}
+<h1><b>Terms and Conditions</b></h1>
+<p><pre>
+  1.Only registered students are allowed to borrow books.<br>
+  2.You must return the borrowed book within the specified time period.<br>
+  3. The penalties for failure to do so are as follows;<br>
+           a)5,000 Uganda shillings if the book is returned 3 days after the deadline.<br>
+           b)15,000 Uganda shillings if returned 10 days after the deadline.<br>
+  4.A student shall not borrow more than 3 books.
+
+</pre></p>
 
 </body>
+{% endblock %}
 </html>
