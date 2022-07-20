@@ -7,13 +7,15 @@ pick up the books from the library. (Issued by the Librarian) -PLAUSIBLY DO
 
 Make the book unavailable when borrowed - -------------DONE
 
+Put a cancel button on borrow.html ------PLAUSIBLY DO
+
 Move the terms and conditions to borrow.html. - ----------DONE
 
 Modify the final.html -  MUST DO --------DONE
 
 borrow_date under borrowed function should grab date from online servers -PLAUSIBLY DO
 
-Include Expected Return Date in the borrowed_book table -PLAUSIBLY DO
+Include Expected Return Date in the borrowed_book table ------DONE
 
 Include Alert Dialogs for messages at signup/login and errors in database. ------DO (ref: https://www.youtube.com/watch?v=R8oyrL99nrE)
 
