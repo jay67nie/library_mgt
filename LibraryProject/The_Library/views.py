@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 
 from .forms import Book_search
@@ -35,6 +36,7 @@ def login_verify(request):
                 # print(request.user)
                 return redirect('/index/')
             else:
+                messages.error(request,"The user name or password you entered was incorrect")
                 return log_in(request)
 
 
