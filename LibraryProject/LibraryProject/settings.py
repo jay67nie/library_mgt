@@ -15,7 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
-# STATIC_FILES = os.path.join(BASE_DIR, "staticfiles")
+STATIC_FILES = os.path.join(BASE_DIR, "staticfiles")
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-kvwk^bl9&h44pjx@x6b%cx$na6q67lkmmhxrk919%ck+1=c79c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['library-mgt-money16.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -120,11 +120,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+STATIC_URL = 'static/'
+STATIC_ROOT = STATIC_FILES
 # STATICFILES_DIRS = (
 #     STATIC_FILES,
 # )
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

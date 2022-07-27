@@ -1,0 +1,1 @@
+web: gunicorn --chdir LibraryProject LibraryProject.wsgi
