@@ -36,7 +36,7 @@ def login_verify(request):
                 # print(request.user)
                 return redirect('/index/')
             else:
-                messages.error(request,"The user name or password you entered was incorrect")
+                messages.error(request,"The user name or  password you entered was incorrect")
                 return log_in(request)
 
 
