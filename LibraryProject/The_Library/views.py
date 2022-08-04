@@ -53,16 +53,17 @@ def sign_up(request):
             re_enter_password = form.cleaned_data['re_enter_password']
             print(form.cleaned_data)
 
+            if password ==re_enter_password:
             # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
             # object.save()
-            user = User.objects.create_user(user_name, email, password, first_name=first_name, last_name=last_name)
-            user.save()
+                user = User.objects.create_user(user_name, email, password, first_name=first_name, last_name=last_name)
+                user.save()
 
-            return redirect(log_in)
-        else:
-
-            return redirect(sign_up)
-        # #     messages.error(request,"Passwords are not matching.")
+                return redirect(log_in)
+            #return render(request,'login.html')
+            else:
+                messages.error(request,"The two passwords entered arent the same")
+                return redirect(sign_up)
 
 
     else:

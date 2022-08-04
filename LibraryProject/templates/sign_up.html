@@ -15,19 +15,20 @@
 <div class="col d-flex justify-content-center ">
 <div class="card " style="width: 30rem;">
 <form action="." method="POST">{% csrf_token %}
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger" role="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+
     <h1>SIGN UP</h1>
     <h5> Already have an account? <a href="{% url 'Login' %}">Login</a></h5>
-<!--    FIRST NAME:<br>-->
-<!--    <input name="first_name"><br><br>-->
-<!--    LAST NAME:<br>-->
-<!--    <input name="last_name"><br><br>-->
-<!--    USERNAME:<br>-->
-<!--    <input name ="user_name"><br><br>-->
-<!--    PASSWORD:<br>-->
-<!--    <input type ="password"><br><br>-->
-<!--    EMAIL:<br>-->
-<!--    <input name ="email"><br><br>-->
+
     {{ form|crispy }}
+
     <button type ="submit" class="btn btn-primary">Sign up</button>
 
 </form>
