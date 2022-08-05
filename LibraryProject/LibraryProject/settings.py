@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'The_Library',
+    "verify_email.apps.VerifyEmailConfig",
+    "django_cron",
     'crispy_forms'
 
 ]
@@ -56,6 +58,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
+LOGIN_URL = 'Login'
 
 TEMPLATES = [
     {
@@ -126,6 +129,15 @@ STATIC_ROOT = STATIC_FILES
 # STATICFILES_DIRS = (
 #     STATIC_FILES,
 # )
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jeromessenyonjo@gmail.com'
+EMAIL_HOST_PASSWORD = 'kdwlrkzwfnsgyzks'
+
+DEFAULT_FROM_EMAIL = 'noreply<no_reply@domain.com>'
 
 
 # Default primary key field type

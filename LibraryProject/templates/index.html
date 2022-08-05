@@ -1,4 +1,5 @@
 {% extends "Base.html" %}
+
 <!--{% load static %}-->
 
 <!DOCTYPE html>
@@ -22,9 +23,12 @@
     {% endblock %}
 </head>
 <body>
-
+{% block navbar %}{% include "navbar.html" %}
+{% endblock %}
+{% block design %}
+{% endblock %}
 {% block table %}
-<button class="btn btn-primary" onclick="window.location={% url 'logout' %}" style="float:right">LOGOUT</button>
+<!--<button class="btn btn-primary" onclick="window.location={% url 'logout' %}" style="float:right">LOGOUT</button>-->
 <!--div class="input-group"-->
 
 
@@ -53,6 +57,7 @@
       </tbody>
      {%endfor%}
 {% endblock %}
+
 
 </body>
 </html>

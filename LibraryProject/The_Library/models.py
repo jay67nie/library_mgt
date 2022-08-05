@@ -27,6 +27,7 @@ class borrowed_book(models.Model):
     due_date = models.DateField()
     return_date = models.DateField(null=True)
     penalty_due = models.IntegerField(default=0)
+    notified = models.BooleanField()
 
     def __str__(self):
         return f"{self.student.username}"

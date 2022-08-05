@@ -17,7 +17,7 @@ from The_Library.views import index, search, search_result, borrow, report, borr
 from django.conf.urls.static import static
 from The_Library.views import log_in, sign_up, login_verify, log_out, terms
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from LibraryProject import settings
 
@@ -34,7 +34,8 @@ urlpatterns = [
     path('search-result/', search_result, name='search_result'),
     path('borrowed/<int:id>', borrowed, name='borrowed'),
     path('borrow/<int:id>', borrow),
-    path('terms_and_conditions/',terms, name='terms')
+    path('verification/', include('verify_email.urls')),
+    path('terms_and_conditions/', terms, name='terms')
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
