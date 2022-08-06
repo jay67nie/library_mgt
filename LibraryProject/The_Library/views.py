@@ -242,3 +242,26 @@ def borrow(request, id):
 def terms(request):
     if request.user.is_authenticated:
         return render(request,"terms.html")
+
+def profile(request):
+    if request.user.is_authenticated:
+        books=borrowed_book.objects.get(returned=False)
+        for x in books:
+            return_date = x.borrow_date + datetime.timedelta(weeks=2)
+            time_elapse = datetime.date.today() - return_date
+
+            if time_elapse.days > 10:
+                x.penalty_due = 15000
+                x.save()
+            elif time_elapse.days > 3:
+                x.penalty_due = 5000
+                x.save()
+
+        obj = borrowed_book.objects.all()
+
+        context={
+            "books":books
+
+        }
+
+        return render(request, "Profile.html",context)
