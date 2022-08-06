@@ -47,23 +47,11 @@ def sign_up(request):
         form = SignUp_form(request.POST)
 
         if form.is_valid():
-            inactive_user = send_verification_email(request, form)
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            user_name = form.cleaned_data['user_name']
-            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             re_enter_password = form.cleaned_data['re_enter_password']
-            print(form.cleaned_data)
-
-            if password ==re_enter_password:
-            # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
-            # object.save()
-                user = User.objects.create_user(user_name, email, password, first_name=first_name, last_name=last_name)
-                user.save()
-
+            if password == re_enter_password:
+                inactive_user = send_verification_email(request, form)
                 return redirect(log_in)
-            #return render(request,'login.html')
             else:
                 messages.error(request,"The two passwords entered arent the same")
                 return redirect(sign_up)
@@ -253,4 +241,4 @@ def borrow(request, id):
 
 def terms(request):
     if request.user.is_authenticated:
-        return render(request, "terms.html")
+        return render(request,"terms.html")

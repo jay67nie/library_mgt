@@ -8,7 +8,7 @@ class SignUp_form(forms.Form):
     user_name = forms.CharField(max_length=50)
     email = forms.EmailField()
     password = forms.CharField(max_length=50, widget=forms.PasswordInput)
-    re_enter_password = forms.CharField(max_length=50, widget=forms.PasswordInput)
+    re_enter_password=forms.CharField(max_length=50, widget=forms.PasswordInput)
 
     # def clean_password(self):
     #     password = self.cleaned_data.get("password")
