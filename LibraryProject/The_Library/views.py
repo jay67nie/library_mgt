@@ -33,7 +33,7 @@ def login_verify(request):
             # print(request.user)
             user = authenticate(username=user_name, password=password)
 
-            if user is not None:
+            if user is not None and not user.is_superuser:
                 login(request, user)
                 # print(request.user)
                 return redirect('/index/')
@@ -257,7 +257,7 @@ def profile(request):
                 x.penalty_due = 5000
                 x.save()
 
-        obj = borrowed_book.objects.all()
+        #obj = borrowed_book.objects.all()
 
         context={
             "books":books

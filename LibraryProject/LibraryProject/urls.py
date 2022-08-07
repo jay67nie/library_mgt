@@ -19,6 +19,7 @@ from The_Library.views import log_in, sign_up, login_verify, log_out, terms
 from django.contrib import admin
 from django.urls import path, include
 
+
 from LibraryProject import settings
 
 urlpatterns = [
@@ -35,8 +36,9 @@ urlpatterns = [
     path('borrowed/<int:id>', borrowed, name='borrowed'),
     path('borrow/<int:id>', borrow),
     path('verification/', include('verify_email.urls')),
-    path('terms_and_conditions/', terms, name='terms')
+    path('terms_and_conditions/', terms, name='terms'),
     path('profile/', profile, name= 'profile')
 
 ]
+
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
