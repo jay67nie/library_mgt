@@ -255,8 +255,9 @@ def terms(request):
 
 
 def profile(request):
-    if request.user.is_authenticated and not request.user.is_superuser:
-        books = borrowed_book.objects.get(returned=False)
+    if request.user.is_authenticated:
+        books=borrowed_book.objects.filter(Q(student=request.user),Q(returned=False))
+
         for x in books:
             return_date = x.borrow_date + datetime.timedelta(weeks=2)
             time_elapse = datetime.date.today() - return_date
@@ -275,4 +276,8 @@ def profile(request):
 
         }
 
-        return render(request, "Profile.html", context)
+        print(books[0].book_name)
+        print(request.user)
+
+        return render(request, "Profile.html",context)
+

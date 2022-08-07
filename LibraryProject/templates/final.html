@@ -47,8 +47,21 @@
         {% for book in books %}
         <li class="list-group-item">{{book.book_id.title}} due {{book.due_date}}</li>
         {% endfor %}
-    </ul>
+        <br>
+        <form action="{% url 'index'%}">
+    Return to homepage..
+    <button type="submit" class="btn btn-primary">HOME</button>
+        </form>
 </div>
+    </ul>
+
+</div>
+<!--div class="row-justify-content-center">
+<form action="{% url 'index'%}">
+    Return to homepage..
+    <button type="submit" class="btn btn-primary">HOME</button>
+</form>
+</div-->
 {% endblock %}
 
 
