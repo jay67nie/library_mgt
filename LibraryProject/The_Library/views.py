@@ -8,7 +8,6 @@ from django.shortcuts import render, redirect
 from verify_email import send_verification_email
 from django.contrib import messages
 
-
 from .forms import Book_search
 from .forms import SignUp_form, Login_form
 from .models import book, borrowed_book
@@ -38,7 +37,7 @@ def login_verify(request):
                 # print(request.user)
                 return redirect('/index/')
             else:
-                messages.error(request,"The user name or  password you entered was incorrect")
+                messages.error(request, "The user name or  password you entered was incorrect")
                 return log_in(request)
 
 
@@ -53,7 +52,7 @@ def sign_up(request):
                 inactive_user = send_verification_email(request, form)
                 return redirect(log_in)
             else:
-                messages.error(request,"The two passwords entered arent the same")
+                messages.error(request, "The two passwords entered arent the same")
                 return redirect(sign_up)
 
 
@@ -68,7 +67,7 @@ def sign_up(request):
 
 
 def log_out(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not request.user.is_superuser:
         logout(request)
         # print(request.user)
         return redirect(log_in)
@@ -81,7 +80,7 @@ def log_out(request):
 
 # Create your views here.
 def search(request):  # function called on first access to search.html
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not request.user.is_superuser:
         if request.method == 'GET':
             my_form = Book_search()
             my_ctxt = {
@@ -113,7 +112,7 @@ def search(request):  # function called on first access to search.html
 #      return render(request, "index.html", my_ctxt)
 
 def index(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not request.user.is_superuser:
         my_books = book.objects.filter(borrowed=False)  # .get(returned=True)
         print(request.user.id)
 
@@ -136,8 +135,8 @@ def search_result(request):  # Display search results using index.html # Called 
     #             book = form.cleaned_data['Search']
     #             print(book)
     title = request.GET.get("search")
-    obj = list(book.objects.filter(
-        Q(title__icontains=title)))  # Using contains to take care of word-spacing.
+    obj = book.objects.filter(Q(title__icontains=title),
+                              Q(borrowed=False))  # Using contains to take care of word-spacing.
 
     my_ctxt = {
 
@@ -161,30 +160,38 @@ def search_result(request):  # Display search results using index.html # Called 
 
 
 def borrowed(request, id):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not request.user.is_superuser and request.method == 'POST':
         book_id = book.objects.get(id=id)
+        books = borrowed_book.objects.filter(student=request.user)
         if not book_id.borrowed:
-            returned = False
-            student = request.user
-            print(student.id)
-            borrow_date = datetime.date.today()
-            due_date = borrow_date + datetime.timedelta(weeks=2)
-            book_name = book_id.title
-            borrowed = not returned
-            book_id.borrowed = borrowed
-            book_id.save()
-            book_id = book.objects.get(id=id)
-            my_ctxt = to_return(book_id, request.user)
+            if len(books) < 3:
+                returned = False
+                student = request.user
+                print(student.id)
+                borrow_date = datetime.date.today()
+                due_date = borrow_date + datetime.timedelta(weeks=2)
+                book_name = book_id.title
+                borrowed = not returned
+                book_id.borrowed = borrowed
+                book_id.save()
+                book_id = book.objects.get(id=id)
+                my_ctxt = to_return(book_id, request.user)
 
-            transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
-                                                       borrow_date=borrow_date, due_date=due_date,
-                                                       book_id=book_id)
-            transaction.save()
+                transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
+                                                           borrow_date=borrow_date, due_date=due_date,
+                                                           book_id=book_id)
+                transaction.save()
 
-            book_id.borrowed = borrowed
+                book_id.borrowed = borrowed
 
-            return render(request, "final.html", my_ctxt)
+                return render(request, "final.html", my_ctxt)
+            else:
+                messages.error(request, "You have exceeded the maximum number of books to borrow.")
+                my_ctxt = to_return(book_id, request.user)
+                return render(request, "final.html", my_ctxt)
+
         else:
+            messages.error(request, "This book has already been borrowed.")
             book_id = book.objects.get(id=id)
             my_ctxt = to_return(book_id, request.user)
             return render(request, "final.html", my_ctxt)
@@ -202,7 +209,7 @@ def to_return(book, user):
 
 
 def report(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.is_superuser:
         obj = borrowed_book.objects.all()  # get non-returned books instead
         for x in obj:
             return_date = x.borrow_date + datetime.timedelta(weeks=2)
@@ -228,24 +235,28 @@ def report(request):
 
 
 def borrow(request, id):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not request.user.is_superuser:
         obj = book.objects.get(id=id)
         print(obj, id)
-        my_ctxt = {
-            "book": obj
-        }
-        return render(request, "borrow.html", my_ctxt)
+        if not obj.borrowed:
+            my_ctxt = {
+                "book": obj
+            }
+            return render(request, "borrow.html", my_ctxt)
+        else:
+            return redirect("/index/")
     else:
         return redirect("/login/")
 
 
 def terms(request):
-    if request.user.is_authenticated:
-        return render(request,"terms.html")
+    if request.user.is_authenticated and not request.user.is_superuser:
+        return render(request, "terms.html")
+
 
 def profile(request):
-    if request.user.is_authenticated:
-        books=borrowed_book.objects.get(returned=False)
+    if request.user.is_authenticated and not request.user.is_superuser:
+        books = borrowed_book.objects.get(returned=False)
         for x in books:
             return_date = x.borrow_date + datetime.timedelta(weeks=2)
             time_elapse = datetime.date.today() - return_date
@@ -257,11 +268,11 @@ def profile(request):
                 x.penalty_due = 5000
                 x.save()
 
-        #obj = borrowed_book.objects.all()
+        # obj = borrowed_book.objects.all()
 
-        context={
-            "books":books
+        context = {
+            "books": books
 
         }
 
-        return render(request, "Profile.html",context)
+        return render(request, "Profile.html", context)

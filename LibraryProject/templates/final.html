@@ -15,7 +15,14 @@
 <!--    }-->
 <!--</script>-->
 {% block content %}
+{% if messages %}
+{% for message in messages %}
+<h1>{{message}}</h1>
+{% endfor %}
+{% else %}
 <h1>You have just borrowed <b>{{borrowed_book.title}}</b> by <b>{{borrowed_book.author}}</b></h1>
+{% endif %}
+
 <!--
 1.check for any other user has any other books borrowed in the database
 2.list those books and the deadlines as well as any penalties if any
@@ -23,11 +30,15 @@
 
 -->
 <!--<h1>Borrowed by:</h1>-->
+<div class="container">
+    <div class="row justify-content-center">
 {% if not books %}
     <h5>You do not have any previous pending books for return.</h5>
 {% else %}
     <h5>The following books are pending return</h5>
 {% endif %}
+    </div>
+</div>
 {% endblock %}
 
 {% block content2 %}
