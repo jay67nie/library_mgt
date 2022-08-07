@@ -2,8 +2,10 @@ import datetime
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
+from verify_email import send_verification_email
 from django.contrib import messages
 
 
@@ -45,22 +47,11 @@ def sign_up(request):
         form = SignUp_form(request.POST)
 
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            user_name = form.cleaned_data['user_name']
-            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             re_enter_password = form.cleaned_data['re_enter_password']
-            print(form.cleaned_data)
-
-            if password ==re_enter_password:
-            # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
-            # object.save()
-                user = User.objects.create_user(user_name, email, password, first_name=first_name, last_name=last_name)
-                user.save()
-
+            if password == re_enter_password:
+                inactive_user = send_verification_email(request, form)
                 return redirect(log_in)
-            #return render(request,'login.html')
             else:
                 messages.error(request,"The two passwords entered arent the same")
                 return redirect(sign_up)
@@ -137,36 +128,36 @@ def index(request):
 
 
 def search_result(request):  # Display search results using index.html # Called after submit button is clicked
-    if request.user.is_authenticated:
-        if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
-            form = Book_search(request.GET)
+    # if request.user.is_authenticated:
+    #     if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
+    #         form = Book_search(request.GET)
+    #
+    #         if form.is_valid():
+    #             book = form.cleaned_data['Search']
+    #             print(book)
+    title = request.GET.get("search")
+    obj = list(book.objects.filter(
+        Q(title__icontains=title)))  # Using contains to take care of word-spacing.
 
-            if form.is_valid():
-                subject_area = form.cleaned_data['subject_area']
-                print(subject_area)
-                obj = list(book.objects.filter(
-                    subject_area__icontains=subject_area))  # Using contains to take care of word-spacing.
+    my_ctxt = {
 
-                my_ctxt = {
+        "books": obj,
+    }
+    # d_title = obj.title
+    # my_query = book.objects.filter(title=title)
+    print(obj)
 
-                    "books": obj,
-                }
-                # d_title = obj.title
-                # my_query = book.objects.filter(title=title)
-                print(obj)
-
-                # context = {
-                #     "books": my_query
-                # }
-                return render(request, 'index.html', my_ctxt)
+    # context = {
+    #     "books": my_query
+    # }
+    return render(request, 'index.html', my_ctxt)
 
 
-
-        else:  # Render a 400 code
-
-            return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
-    else:
-        return redirect("/login/")
+#     else:  # Render a 400 code
+#
+#         return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
+# else:
+#     return redirect("/login/")
 
 
 def borrowed(request, id):
@@ -248,6 +239,29 @@ def borrow(request, id):
         return redirect("/login/")
 
 
-def terms (request):
+def terms(request):
     if request.user.is_authenticated:
         return render(request,"terms.html")
+
+def profile(request):
+    if request.user.is_authenticated:
+        books=borrowed_book.objects.get(returned=False)
+        for x in books:
+            return_date = x.borrow_date + datetime.timedelta(weeks=2)
+            time_elapse = datetime.date.today() - return_date
+
+            if time_elapse.days > 10:
+                x.penalty_due = 15000
+                x.save()
+            elif time_elapse.days > 3:
+                x.penalty_due = 5000
+                x.save()
+
+        obj = borrowed_book.objects.all()
+
+        context={
+            "books":books
+
+        }
+
+        return render(request, "Profile.html",context)

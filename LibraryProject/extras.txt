@@ -13,15 +13,15 @@ Move the terms and conditions to borrow.html. - ----------DONE
 
 Modify the final.html -  MUST DO --------DONE
 
-borrow_date under borrowed function should grab date from online servers -PLAUSIBLY DO
+borrow_date under borrowed function should grab date from online servers -PLAUSIBLY DO (Chill)
 
 Include Expected Return Date in the borrowed_book table ------DONE
 
-Include Alert Dialogs for messages at signup/login and errors in database. ------DO (ref: https://www.youtube.com/watch?v=R8oyrL99nrE)
+Include Alert Dialogs for messages at signup/login and errors in database. ------DO (ref: https://www.youtube.com/watch?v=R8oyrL99nrE)  ------Vivian
 
 Include Re-enter password in Sign Up page. ----DO-----DONE
 
-Password Strength validator in Django ----DO (ref: https://stackoverflow.com/questions/5226329/enforcing-password-strength-requirements-with-django-contrib-auth-views-password)
+Password Strength validator in Django ----DO (ref: https://stackoverflow.com/questions/5226329/enforcing-password-strength-requirements-with-django-contrib-auth-views-password) -------Michelle
 
 Change Website Font -----PLAUSIBLY DO
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<table>
+    <thead> <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th scope="col">Date borrowed</th>
+      <th scope="col">Return date</th>
+        <th scope="col">Fines due</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for x in books%}
+    <tr>
+        <td>{{x.title}}</td>
+        <td>{{x.author}}</td>
+        <td></td>
+
+
+
+
+    </tr>
+
+
+
+    {%endfor%}
+
+    </tbody>
+</table>
+</body>
+</html>
