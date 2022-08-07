@@ -20,7 +20,7 @@ class SignUp_form(forms.Form):
     #         raise forms.ValidationError("Two passwords entered aren't the same")
     #     return password, re_enter_password
 
-    def save(self):
+    def save(self, commit):
         data = self.cleaned_data
         first_name = data['first_name']
         last_name = data['last_name']

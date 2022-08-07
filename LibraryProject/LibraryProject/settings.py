@@ -57,6 +57,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CRON_CLASSES = [
+    "The_Library.cron.Penalty",
+    # ...
+]
+
+
 ROOT_URLCONF = 'LibraryProject.urls'
 LOGIN_URL = 'Login'
 
