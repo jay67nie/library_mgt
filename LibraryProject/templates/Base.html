@@ -9,8 +9,12 @@
 </head>
 <style>
     body{background-color:beige;}
-    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #A1045A !important; border: 1px beige
+   .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .btn-primary:focus {
+    background-color: #A1045A !important;
+
+    border: 1px beige;
+
+    border-color: #361500 !important;
 }
 
     .first{
@@ -34,16 +38,24 @@
     .list-group-item{
     background-color: beige;
     }
+    .navbar {
+     background-color:#361500;
+    }
 
 
 
 </style>
 <body>
+{% block navbar %}
+{% endblock %}
+
 
 <div class="first">
-  <table border="0">
+  {% block design %}
+<table border="0">
     <tr>&nbsp</tr>
   </table>
+{% endblock %}
 </div>
   <div class="container">
     <div class="row justify-content-center">

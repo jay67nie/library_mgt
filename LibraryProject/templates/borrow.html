@@ -7,11 +7,13 @@
 {%block content2%}
 <div class="row justify-content-center">
 <form action="/borrowed/{{book.id}}" method="POST">{%csrf_token%}
-    <input class="form-check-input" type="checkbox" onchange="document.getElementById('borrow').disabled = !this.checked;">Agree to <a href="">Terms and Conditions</a></input><br><br>
-<!--<button id="hello" disabled onclick="{% url 'index' %}">Accept</button>-->
+    <input class="form-check-input" type="checkbox" onchange="document.getElementById('borrow').disabled = !this.checked;">Agree to <a href="{% url 'terms' %}">Terms and Conditions</a><br><br>
+    <div class="col-md-12 text-center">
     <button type="submit" disabled id="borrow" class="btn btn-primary">Borrow</button>
+    </div>
 </form>
 </div>
+
 {%endblock%}
 
 

@@ -5,23 +5,27 @@ One time Passwords for verification of students as they come to
 pick up the books from the library. (Issued by the Librarian) -PLAUSIBLY DO
 
 
-Make the book unavailable when borrowed - MUST DO -------------DONE
+Make the book unavailable when borrowed - -------------DONE
 
-Move the terms and conditions to borrow.html. - MUST DO----------DONE
+Put a cancel button on borrow.html ------PLAUSIBLY DO
 
-Modify the final.html -  MUST DO
+Move the terms and conditions to borrow.html. - ----------DONE
 
-borrow_date under borrowed function should grab date from online servers -PLAUSIBLY DO
+Modify the final.html -  MUST DO --------DONE
 
-Include Expected Return Date in the borrowed_book table -PLAUSIBLY DO
+borrow_date under borrowed function should grab date from online servers -PLAUSIBLY DO (Chill)
 
-Include Alert Dialogs for messages at signup/login and errors in database. ------DO (ref: https://www.youtube.com/watch?v=R8oyrL99nrE)
+Include Expected Return Date in the borrowed_book table ------DONE
+
+Include Alert Dialogs for messages at signup/login and errors in database. ------DO (ref: https://www.youtube.com/watch?v=R8oyrL99nrE)  ------Vivian
 
 Include Re-enter password in Sign Up page. ----DO-----DONE
 
-Password Strength validator in Django ----DO (ref: https://stackoverflow.com/questions/5226329/enforcing-password-strength-requirements-with-django-contrib-auth-views-password)
+Password Strength validator in Django ----DO (ref: https://stackoverflow.com/questions/5226329/enforcing-password-strength-requirements-with-django-contrib-auth-views-password) -------Michelle
 
 Change Website Font -----PLAUSIBLY DO
 
+Every time you refresh a page after borrowing, the same book is added to the borrowed database even if its already borrowed-MUST DO---DONE
 
+students should have a maximum number of books to borrow--MUST DO
 

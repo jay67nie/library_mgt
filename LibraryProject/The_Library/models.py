@@ -1,6 +1,9 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
+import datetime
+
+from django.utils import timezone
 
 
 class book(models.Model):
@@ -24,6 +27,7 @@ class borrowed_book(models.Model):
     due_date = models.DateField()
     return_date = models.DateField(null=True)
     penalty_due = models.IntegerField(default=0)
+    notified = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.student.username}"
@@ -45,3 +49,4 @@ class borrowed_book(models.Model):
 #
 #     def __str__(self):
 #         return f"{self.first_name},{self.last_name},{self.user_name},{self.email}"
+
