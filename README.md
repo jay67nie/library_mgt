@@ -3,11 +3,29 @@
 
 ## Description
 
-Design of a library management system.
+Design of a library management system.  
+  
+#### The system is used by two majors, the student and the librarian.
+### Student
+In the login page, the student would have to give the username and password if the details are already saved in the database.
+
+If that's not the case, a hyperlink to the signup form is there for the new user to fill in their details and an email verification link is sent to confirm the new user. This has to be clicked before the new user is able to access this system.
+
+After the whole sign up and login process the user is redirected to the table containing the books to be borrowed, the student searchs for the desired book and clicks the book he/ she wants to borrow and accepts the terms and conditions then the borrow record is sent to the database after confirming the borrow.
+
+The borrow details are reflected on the Librarian's interface such that the book is arranged for pickup by the student.
+
+The student also has an interface where he or she is able to view the status of any books to be returned and their corresponding penalties. Note that a student can only borrow a maximum of 3 books.
+
+### Librarian
+
+The librarian logs into the system administration where he or she can post books, update their details and pull down any books not available anymore in the library. 
+
+He or she can also see the reports of the borrowed books, and any penalties due by the respective students.
 
 
 ## Website
-For now, the website is currently under maintenance, so it can be fully accessed from our local server.
+syslim.herokuapp.com
 
 ## Functional requirements
 1. Library Database:  
@@ -34,6 +52,8 @@ Wanendeya Samson Nathan
 Ssenyonjo Jerome
 
 ## Project status
-The project is currently undergoing development.
+The project is currently being deployed and still being maintained.
+
+
 
 
