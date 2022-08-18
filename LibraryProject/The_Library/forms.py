@@ -1,5 +1,20 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from django.utils.translation import gettext as _
+from django.contrib.auth.password_validation import validate_password
+
+# class MinimumLengthValidator :
+#     def __init__(self, min_length=8):
+#         self.min_length = min_length
+#
+#     def validate(self, password, user=None):
+#         if len(password) < self.min_length:
+#             raise forms.ValidationError(_("This password must contain at least %(min_length)d character."), code= 'password_short' , params={'min_length': self.min_length},)
+#     def get_help_text (self):
+#         return _("Your password must contain at least %(min_length)d characters."
+#                  % {'min_length': self.min_length}
+#                  )
 
 
 class SignUp_form(forms.Form):
@@ -10,15 +25,14 @@ class SignUp_form(forms.Form):
     password = forms.CharField(max_length=50, widget=forms.PasswordInput)
     re_enter_password=forms.CharField(max_length=50, widget=forms.PasswordInput)
 
-    # def clean_password(self):
-    #     password = self.cleaned_data.get("password")
-    #     re_enter_password = self.cleaned_data.get("re_enter_password")
-    #
-    #     # .objects.filter(password=password,re_enter_password=re_enter_password)
-    #
-    #     if password != re_enter_password:
-    #         raise forms.ValidationError("Two passwords entered aren't the same")
-    #     return password, re_enter_password
+    def clean_password(self):
+        data = self.cleaned_data
+        password = data['password']
+        validate_password(password)
+        return password
+
+
+
 
     def save(self, commit):
         data = self.cleaned_data

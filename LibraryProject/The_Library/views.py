@@ -66,11 +66,19 @@ def sign_up(request):
                 messages.error(request, "The two passwords entered arent the same")
                 return redirect(sign_up)
 
+        else:
+            form1 = SignUp_form()
+
+            context = {
+                "form": form1
+
+            }
+            return render(request, 'sign_up.html', context)
     else:
         form1 = SignUp_form()
 
         context = {
-            "form": form1
+           "form": form1
 
         }
         return render(request, 'sign_up.html', context)
