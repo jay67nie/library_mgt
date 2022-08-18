@@ -17,7 +17,7 @@ borrow_date under borrowed function should grab date from online servers -PLAUSI
 
 Include Expected Return Date in the borrowed_book table ------DONE
 
-Include Alert Dialogs for messages at signup/login and errors in database. ------DO (ref: https://www.youtube.com/watch?v=R8oyrL99nrE)  ------Vivian
+Include Alert Dialogs for messages at signup/login and errors in database. ------DO (ref: https://www.youtube.com/watch?v=R8oyrL99nrE)  ------DONE
 
 Include Re-enter password in Sign Up page. ----DO-----DONE
 
@@ -27,5 +27,7 @@ Change Website Font -----PLAUSIBLY DO
 
 Every time you refresh a page after borrowing, the same book is added to the borrowed database even if its already borrowed-MUST DO---DONE
 
-students should have a maximum number of books to borrow--MUST DO
+students should have a maximum number of books to borrow--MUST DO -----DONE
+
+Refresh Report to reflect new borrow requests (Librarian) ----MUST DO.
 

@@ -1,6 +1,6 @@
 {% extends "Base.html" %}
 {% load crispy_forms_tags %}
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,17 +14,22 @@
 <div class="col d-flex justify-content-center ">
     <div class="card " style="width: 30rem;">
         <form action="{% url 'verify' %}" method="GET">{% csrf_token %}
-            {% if messages %}
-            {% for message in messages %}
+
+            {% for message in messages%}
+            {% if obj %}
+            <div class="alert alert-success" role="alert">
+                {{message}}
+            </div>
+            {% else %}
             <div class="alert alert-danger" role="alert">
                 {{message}}
             </div>
-            {% endfor %}
             {% endif %}
+            {% endfor %}
            <h1>LOGIN</h1>
             Don't have an account? <a href="{% url 'SignUp' %}">Sign up</a>
              {{form|crispy}}
-            <button type="submit" class="btn btn-primary ">Login</button>
+            <button type="submit" class="btn btn-primary">Login</button>
 
         </form>
     </div>

@@ -1,29 +1,38 @@
 import datetime
 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from django.db.models import Q
-from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from verify_email import send_verification_email
-from django.contrib import messages
 
-from .forms import Book_search
 from .forms import SignUp_form, Login_form
 from .models import book, borrowed_book
+
+obj = None
 
 
 def log_in(request):
     if request.method == "GET":
         form = Login_form()
-        context = {
-            "form": form
-        }
-        print("__init__")
+        global obj
+        if obj:
+            messages.success(request, "A verification link has been sent to your email!")
+            context = {
+                "form": form,
+                "obj": obj
+            }
+        else:
+            context = {
+                "form": form
+            }
+
         return render(request, "login.html", context)
 
 
 def login_verify(request):
+    global obj
+    obj = None
     if request.method == "GET":
         form = Login_form(request.GET)
         if form.is_valid():
@@ -49,12 +58,13 @@ def sign_up(request):
             password = form.cleaned_data['password']
             re_enter_password = form.cleaned_data['re_enter_password']
             if password == re_enter_password:
-                inactive_user = send_verification_email(request, form)
+                send_verification_email(request, form)
+                global obj
+                obj = "Verification link has been sent to your Email."
                 return redirect(log_in)
             else:
                 messages.error(request, "The two passwords entered arent the same")
                 return redirect(sign_up)
-
 
     else:
         form1 = SignUp_form()
@@ -79,19 +89,19 @@ def log_out(request):
 
 
 # Create your views here.
-def search(request):  # function called on first access to search.html
-    if request.user.is_authenticated and not request.user.is_superuser:
-        if request.method == 'GET':
-            my_form = Book_search()
-            my_ctxt = {
-                "form": my_form
-            }
-            return render(request, "search.html", my_ctxt)
-        else:  # Render a 400 code
-
-            return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
-    else:
-        return redirect("/login/")
+# def search(request):  # function called on first access to search.html
+#     if request.user.is_authenticated and not request.user.is_superuser:
+#         if request.method == 'GET':
+#             my_form = Book_search()
+#             my_ctxt = {
+#                 "form": my_form
+#             }
+#             return render(request, "search.html", my_ctxt)
+#         else:  # Render a 400 code
+#
+#             return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
+#     else:
+#         return redirect("/login/")
 
 
 #  DON'T REMOVE THIS INDEX FUNCTION
@@ -256,7 +266,7 @@ def terms(request):
 
 def profile(request):
     if request.user.is_authenticated:
-        books=borrowed_book.objects.filter(Q(student=request.user),Q(returned=False))
+        books = borrowed_book.objects.filter(Q(student=request.user), Q(returned=False))
 
         for x in books:
             return_date = x.borrow_date + datetime.timedelta(weeks=2)
@@ -279,5 +289,4 @@ def profile(request):
         print(books[0].book_name)
         print(request.user)
 
-        return render(request, "Profile.html",context)
-
+        return render(request, "Profile.html", context)
