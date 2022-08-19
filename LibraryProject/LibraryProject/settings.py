@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-kvwk^bl9&h44pjx@x6b%cx$na6q67lkmmhxrk919%ck+1=c79c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','library--mgt.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','syslim.herokuapp.com']
 
 
 # Application definition
@@ -95,6 +95,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',

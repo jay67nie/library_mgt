@@ -1,7 +1,9 @@
 import datetime
+import time
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.core.mail import send_mail
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from verify_email import send_verification_email
@@ -10,6 +12,7 @@ from .forms import SignUp_form, Login_form
 from .models import book, borrowed_book
 
 obj = None
+notifications_running = False
 
 
 def log_in(request):
@@ -26,6 +29,14 @@ def log_in(request):
             context = {
                 "form": form
             }
+        send_mail(
+            subject='Reminder',
+            message='Hello, this is to remind you that you have 1 day to return this book. \n'
+                    +'\n\nThank you!',
+            from_email=None,
+            recipient_list=['atalamchll7@gmail.com'],
+            fail_silently=False,
+        )
 
         return render(request, "login.html", context)
 
@@ -67,10 +78,8 @@ def sign_up(request):
                 return redirect(sign_up)
 
         else:
-            form1 = SignUp_form()
-
             context = {
-                "form": form1
+                "form": form
 
             }
             return render(request, 'sign_up.html', context)
@@ -227,6 +236,11 @@ def to_return(book, user):
 
 
 def report(request):
+    global notifications_running
+    if not notifications_running:
+        notifications_running = True
+        notification_handler()
+
     if request.user.is_authenticated and request.user.is_superuser:
         obj = borrowed_book.objects.all()  # get non-returned books instead
         for x in obj:
@@ -298,3 +312,25 @@ def profile(request):
         print(request.user)
 
         return render(request, "Profile.html", context)
+
+def notification_handler():
+    while True:
+        obj = borrowed_book.objects.filter(returned=False)  # get non-returned books instead
+        for x in obj:
+            notified = x.notified
+            return_date = x.due_date
+            time_elapse = datetime.date.today() - return_date
+
+            if time_elapse.weeks <= 2 and not notified:
+                send_mail(
+                    subject='Reminder',
+                    message='Hello, this is to remind you that you have 1 day to return this book. \n'
+                            + x.book_name + '\n\nThank you!',
+                    from_email=None,
+                    recipient_list=[x.student.email],
+                    fail_silently=False,
+                )
+
+                x.notified = True
+                x.save()
+        time.sleep(1800)

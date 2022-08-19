@@ -21,7 +21,7 @@ Include Alert Dialogs for messages at signup/login and errors in database. -----
 
 Include Re-enter password in Sign Up page. ----DO-----DONE
 
-Password Strength validator in Django ----DO (ref: https://stackoverflow.com/questions/5226329/enforcing-password-strength-requirements-with-django-contrib-auth-views-password) -------Michelle
+Password Strength validator in Django ----DO (ref: https://stackoverflow.com/questions/5226329/enforcing-password-strength-requirements-with-django-contrib-auth-views-password) -------DONE
 
 Change Website Font -----PLAUSIBLY DO
 
