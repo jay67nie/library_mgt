@@ -8,6 +8,11 @@ body {
   background-color: beige;
 
 }
+@media (min-width: 1200px) {
+    .container-sm{
+        max-width: 500px;
+    }
+}
 .btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
     background-color: #361500 !important; border: 1px
     }
@@ -51,31 +56,18 @@ body {
    background-color: beige;
    }
 </style>
-</head>
 <body>
 
 <div class="topnav">
-  <a href="{% url 'index' %}">Home</a>
-  <a href="{% url 'terms' %}">Terms</a>
 
-  <div class="topnav-right">
-    <a href="{% url 'profile' %}">Profile</a>
-    <a href="{% url 'logout' %}">Logout</a>
-  </div>
 
   <div class="topnav-center">
-   <div class="container-fluid">
+   <div class="container-sm">
+       <a href="/admin">Home</a>
 
-<form class="d-flex p-2" action="{% url 'search_result' %}" method="GET">
-<!--<div class="dropdown">-->
-<!--  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example</button>-->
-<!--  <ul class="dropdown-menu">-->
-<!--    <li><a href="#">HTML</a></li>-->
-<!--    <li><a href="#">CSS</a></li>-->
-<!--    <li><a href="#">JavaScript</a></li>-->
-<!--  </ul>-->
-<!--</div>-->
-      <input class="form-control me-2" type="search" placeholder="Search by title" aria-label="Search" name="search">
+<form class="d-flex p-2" action="{% url 'search' %}" method="GET">
+
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
       <button class="btn btn-secondary" type="submit">Search</button>
     </form>
   </div>

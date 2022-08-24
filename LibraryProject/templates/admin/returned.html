@@ -1,0 +1,17 @@
+{% extends "Base.html" %}
+
+{%block content%}
+<h1> Mark {{book.title}}
+    <br>by <br>
+    {{book.author}} as Returned? </h1><br>
+{%endblock%}
+{%block content2%}
+<div class="row justify-content-center">
+<form action="{% url 'return' id=book.id %}" method="POST">{%csrf_token%}
+    <div class="col-md-12 text-center">
+    <button type="submit"  class="btn btn-primary">Mark as Returned</button>
+    </div>
+</form>
+</div>
+
+{%endblock%}
