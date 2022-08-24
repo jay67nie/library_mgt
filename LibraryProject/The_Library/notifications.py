@@ -12,17 +12,17 @@ notifications_running = False
 
 def notification_handler():
     while True:
-        obj = borrowed_book.objects.filter(Q(returned=False), Q(notified=False)) # get non-returned books instead
+        obj = borrowed_book.objects.filter(Q(returned=False), Q(notified=False))
         for x in obj:
             due_date = x.due_date
-            time_elapse = due_date - datetime.date.today()#flip
+            time_elapse = due_date - datetime.date.today()
             if time_elapse.days <= 1:
                 threading.Thread(target=send_email(x), args=[]).start()
 
                 x.notified = True   #Need to handle email error here, otherwise the notification will never be sent.
                 x.save()
             print("Notification handler reached")
-        time.sleep(60)#when you need a superhero he gets the job done ,with that device that he wears on his arm
+        time.sleep(3600)
 
 
 def send_email(x):
@@ -32,5 +32,5 @@ def send_email(x):
                 + x.book_name + '\n\nThank you!',
         from_email=None,
         recipient_list=[x.student.email],
-        fail_silently=False, #Make True
+        fail_silently=False,
     )

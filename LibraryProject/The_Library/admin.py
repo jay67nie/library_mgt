@@ -1,3 +1,4 @@
+# Register your models here.
 from django.contrib import admin
 from .models import book, borrowed_book
 
@@ -6,9 +7,7 @@ from .models import book, borrowed_book
 class bookAdmin(admin.ModelAdmin):
     list_display = ("title", "author", "shelf_number")
 
-
-# @admin.register(borrowed_book)
-@admin.display(description="Book ID")
+@admin.display(description="Book ID")  #Admin panel display decorator
 def book_idx(obj):
     return obj.book_id.id
 
@@ -22,4 +21,4 @@ class borrowed_bookAdmin(admin.ModelAdmin):
 
 
 admin.site.register(borrowed_book, borrowed_bookAdmin)
-# Register your models here.
+

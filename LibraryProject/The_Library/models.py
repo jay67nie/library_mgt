@@ -1,9 +1,7 @@
-from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.db import models
 import datetime
 
-from django.utils import timezone
+from django.contrib.auth import get_user_model
+from django.db import models
 
 
 class book(models.Model):
@@ -21,8 +19,8 @@ class book(models.Model):
 class borrowed_book(models.Model):
     returned = models.BooleanField()
     book_id = models.ForeignKey(book, on_delete=models.CASCADE)
-    book_name = models.CharField(max_length=100, default="")  # Remove default on Fresh DB creation
-    student = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # Make this a ForeignKey(settings.AUTH_USER_MODEL)
+    book_name = models.CharField(max_length=100, default="")
+    student = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     borrow_date = models.DateField()
     borrow_time = models.TimeField(default=datetime.time())
     due_date = models.DateField()
@@ -33,21 +31,4 @@ class borrowed_book(models.Model):
     def __str__(self):
         return f"{self.student.username}"
 
-# class borrowed(models.Model):
-# username
-# book_borrowed
-# date_borrowed
-# date_returned
-# penalty
-# class Student(models.Model):
-#     first_name = models.CharField(max_length=50, default=None)
-#     last_name = models.CharField(max_length=50, default=None)
-#     user_name = models.CharField(max_length=50)
-#     password = models.CharField(max_length=20)
-#     email = models.EmailField(max_length=250, default=None)
-#
-#     # student_number=models.CharField(max_length=12)
-#
-#     def __str__(self):
-#         return f"{self.first_name},{self.last_name},{self.user_name},{self.email}"
 
