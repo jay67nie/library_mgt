@@ -7,13 +7,6 @@
 
 </head>
 <body>
-<!--<h1> Your request has been submitted! Pick up the book at the Library.</h1>-->
-<!--<h2> Redirecting to homepage... (This takes about 5 seconds)</h2>-->
-<!--<script>-->
-<!--    setTimeout(function(){-->
-<!--    $.get("{% url 'index' %}"), 5000)-->
-<!--    }-->
-<!--</script>-->
 {% block content %}
 {% if messages %}
 {% for message in messages %}
@@ -26,17 +19,12 @@
 <!--
 1.check for any other user has any other books borrowed in the database
 2.list those books and the deadlines as well as any penalties if any
-3.Student shouldnt be able to have more than 3 books borrowed/in their name
+3.Student shouldn't be able to have more than 3 books borrowed/in their name
 
 -->
-<!--<h1>Borrowed by:</h1>-->
 <div class="container">
     <div class="row justify-content-center">
-{% if not books %}
-    <h5>You do not have any previous pending books for return.</h5>
-{% else %}
     <h5>The following books are pending return</h5>
-{% endif %}
     </div>
 </div>
 {% endblock %}
@@ -54,22 +42,7 @@
 <button type="submit" class="btn btn-primary text-center" onclick="document.location='{% url 'index'%}'">RETURN HOME</button>
 </div>
 
-
-
-<!--div class="row-justify-content-center">
-<form action="{% url 'index'%}">
-    Return to homepage..
-    <button type="submit" class="btn btn-primary">HOME</button>
-</form>
-</div-->
 {% endblock %}
-
-
-
-
-
-<!--<input type="checkbox" onchange="document.getElementById('hello').disabled = !this.checked;">Agree to <a href="">Terms and Conditions</a></input><br><br>-->
-<!--<button id="hello" disabled onclick="{% url 'index' %}">Accept</button>-->
 
 
 </body>

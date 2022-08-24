@@ -1,5 +1,4 @@
 {%extends 'Base.html'%}
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,6 +19,7 @@
     </tr>
     </thead>
     <tbody>
+    {% if books %}
     {% for x in books%}
     <tr>
         <td>{{x.book_name}}</td>
@@ -36,6 +36,9 @@
 
 
     {%endfor%}
+    {%else%}
+    <h5>You do not have any previous pending books for return.</h5>
+    {%endif%}
 
     </tbody>
     {% endblock table%}

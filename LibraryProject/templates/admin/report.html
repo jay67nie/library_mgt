@@ -1,15 +1,23 @@
 {% extends "Base.html" %}
 
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Borrow Report</title>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'report.js' %}"></script>
 
 </head>
 <body>
+{% block navbar %}{% include "admin/report_nav.html" %}
+{% endblock %}
+{% block design %}
+{% endblock %}
+
 <script>window.setTimeout(function () {
     window.location.reload();
-}, 5000);</script>
+}, 30);</script>
 {% block table %}
 <thead>
     <tr>
@@ -18,6 +26,7 @@
         <th scope="col">Book name</th>
         <th scope="col">Student</th>
         <th scope="col">Borrow Date</th>
+        <th scope="col">Borrow Time</th>
         <th scope="col">Return Date</th>
         <th scope="col">Penalty Due</th>
 
@@ -29,12 +38,17 @@
 <tbody>
 
   {% for x in books %}
-    <tr>
+   {% if not x.returned %}
+    <tr class="clickable " onclick="window.location='/admin/return/{{x.book_id.id}}'">
+        {% else %}
+        <tr>
+      {%endif%}
         <td>{{x.returned}}</td>
         <td>{{x.book_id.id}}</td>
         <td>{{x.book_name}}</td>
-        <td>{{x.student}}</td>       <!--make this x.student_id.id-->
+        <td>{{x.student}}</td>
         <td>{{x.borrow_date}}</td>
+        <td>{{x.borrow_time}}</td>
         <td>{{x.return_date}}</td>
         <td>{{x.penalty_due}}</td>
 
