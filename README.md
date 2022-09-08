@@ -53,6 +53,7 @@ Ssenyonjo Jerome
 
 ## Project status
 The project is currently being deployed and still being maintained.
+The email notifications have been taken down due for privacy concerns.
 
 
 
