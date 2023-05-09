@@ -35,7 +35,7 @@ urlpatterns = [
     path('admin/report/search/', search, name='search'),
     path('search-result/', search_result, name='search_result'),
     path('borrowed/<int:id>', borrowed, name='borrowed'),
-    path('borrow/<int:id>', borrow),
+    path('borrow/<int:id>', borrow, name='borrow'),
     path('verification/', include('verify_email.urls')),
     path('terms_and_conditions/', terms, name='terms'),
     path('profile/', profile, name= 'profile')
