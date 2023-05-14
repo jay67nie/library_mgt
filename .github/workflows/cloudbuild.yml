@@ -1,10 +1,5 @@
 name: Cloud Build
 
-on:
-  push:
-    branches:
-      - test
-
 env:
   PROJECT_ID: library-system-386718
   IMAGE_NAME: dImage
