@@ -1,15 +1,5 @@
 name: Cloud Build
 
-env:
-  PROJECT_ID: library-system-386718
-  IMAGE_NAME: dImage
-  REGION: global
-  SERVICE_NAME: myService
-  DATABASE_URL: sqlite:///db.sqlite3
-  SECRET_KEY: library1234
-  DEBUG: "False"
-
-
 steps:
   - name: "gcr.io/cloud-builders/git"
     args: ["clone", "https://github.com/[GITHUB-USERNAME]/[REPO-NAME].git"]
