@@ -1,5 +1,9 @@
-from django.test import TestCase
+from django.http import HttpResponse
+from django.test import TestCase, Client
 from django.urls import reverse
+from django.test import RequestFactory
+
+from .forms import Login_form
 from .models import book
 from datetime import date
 from django.contrib.auth.models import User
@@ -73,3 +77,28 @@ class BorrowViewTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/index/')
+
+
+class LogInViewTestCase(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_log_in_get_request(self):
+        response = self.client.get('/login', follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response, HttpResponse)
+        self.assertIsInstance(response.context['form'], Login_form)
+        self.assertNotIn('obj', response.context)
+        # Add more assertions as needed
+
+    def test_log_in_post_request(self):
+        response = self.client.post('/login', {'user_name': 'myuser', 'password': 'mypassword'}, follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response, HttpResponse)
+        self.assertIsInstance(response.context['form'], Login_form)
+        self.assertNotIn('obj', response.context)
+        # Add more assertions as needed
+
+
