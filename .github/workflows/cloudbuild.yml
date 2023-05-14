@@ -2,7 +2,7 @@ name: Cloud Build
 
 steps:
   - name: "gcr.io/cloud-builders/git"
-    args: ["clone", "https://github.com/jay67nie/library-mgt.git"]
+    args: ["clone","--username=jay67nie", "--password=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", "https://github.com/jay67nie/library-mgt.git"]
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "gcr.io/library-system-386718/libdocker", "."]
   - name: "gcr.io/cloud-builders/docker"
