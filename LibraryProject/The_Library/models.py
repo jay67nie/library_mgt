@@ -12,6 +12,7 @@ class book(models.Model):
     shelf_number = models.CharField(max_length=10)
     borrowed = models.BooleanField(default=False)
 
+
     def __str__(self):
         return f"{self.id}: {self.title}"
 
